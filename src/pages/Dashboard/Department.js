@@ -23,12 +23,12 @@ const Department = () => {
     } = useForm();
     const columns = [
         {
-            name: <h4>Department</h4>,
+            name: <h5>Department</h5>,
             selector: (row) => row.department_name,
             sortable: true,
         },
         {
-            name: <h4>Status</h4>,
+            name: <h5>Status</h5>,
             selector: (row) => row.status,
             cell: (row) => (
                 <Badge color={`outline-${row.status === true ? "success" : "danger"}`}>
@@ -38,7 +38,7 @@ const Department = () => {
             sortable: true,
         },
         {
-            name: <h4>Action</h4>,
+            name: <h5>Action</h5>,
             cell: (row) => (
                 <div>
                     <Button outline color={`warning`} className={`me-2`} onClick={() => Edit(row)}>
@@ -138,6 +138,8 @@ const Department = () => {
                         getDepartmentList();
                         setOpen(false);  
                     }
+                }).catch((error)=>{
+                    console.log(error);
                 })
         } else {
             const data = {
@@ -197,7 +199,7 @@ const Department = () => {
                                     type="text"
                                     id="department_name"
                                     {...register("department_name", { required: true })}
-                                    className="form-control"
+                                    className="form-control input"
                                     value={watch(`department_name`)}
                                 />
                                 <span className="invalid"
@@ -231,8 +233,8 @@ const Department = () => {
                                     </div>
                                 </div>
                             </Col>
-                            <Col md={2} className='mt-4'>
-                                <Button color='primary'>
+                            <Col md={2}>
+                                <Button color='primary'className='button'>
                                     {mode == "Edit" ? "Update" : "Save"} Information
                                 </Button>
                             </Col>

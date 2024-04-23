@@ -21,23 +21,23 @@ const ChargeType = () => {
 
   const columns = [
     {
-      name: <h4>Charge Type</h4>,
+      name: <h5>Charge Type</h5>,
       selector: (row) => row.charge_type_name,
       sortable: true,
   },
   {
-      name: <h4>Type</h4>,
+      name: <h5>Type</h5>,
       selector: (row) =>row.type_name,
       sortable: true,
   },
  
   {
-      name: <h4>Charge Amount</h4>,
+      name: <h5>Charge Amount</h5>,
       selector: (row) => row.charge_amount,
       sortable: true,
   },
     {
-        name: <h4>Action</h4>,
+        name: <h5>Action</h5>,
         cell: (row) => (
             <div>
                 <Button outline color={`warning`} className={`me-2`} >
@@ -148,7 +148,7 @@ const ChargeType = () => {
                   type="text"
                   id="chargeAmount"
                   {...register("chargeAmount",{required:true})}
-                  className="form-control"
+                  className="form-control input"
                   value={watch(`chargeAmount`)}
                 />
                  <span
@@ -179,8 +179,10 @@ const ChargeType = () => {
                       {errors.type?.type === "required" && "Charge Type is Required."}
                     </span>
               </Col>
-              <Col md={2} className='mt-4'>
-                <Button color='primary' type='submit'>
+              <Col md={2}>
+                <Button color='primary' type='submit'
+                className='button'
+                >
                   Save
                 </Button>
               </Col>
@@ -191,6 +193,7 @@ const ChargeType = () => {
       ) : null}
       <hr></hr>
       <DataTable
+      
       columns={columns}
         data={data}
         subHeader={false}
