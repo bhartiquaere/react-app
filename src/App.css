@@ -36,3 +36,46 @@
     transform: rotate(360deg);
   }
 }
+
+.input{
+  height: 38px !important;
+}
+.datepicker{
+  width: 380px !important;
+}
+
+.button{
+  margin-top: 30px;
+}
+.tableHead{
+  margin: 10px;
+  height: 50px;
+  background-color: #ebeef2;
+  padding-top: 15px;
+}
+
+.left{
+  margin-left: 800px !important;
+}
+
+.card-header{
+  background-color: #ebeef2 !important;
+  border-radius: 4px !important;
+  margin-bottom: .25rem !important;
+  padding: .5rem 1.25rem !important
+}
+
+.card-title{
+  color: #8094ae;
+  font-family: DM Sans, sans-serif;
+  font-size: 15px !important;
+  font-weight: 700;
+  letter-spacing: .2em;
+  line-height: 1.2;
+  padding-top: 8px;
+}
+.custom-control-input {
+  height: 15px;
+  position: absolute;
+  width: 15px;
+}
