@@ -5,72 +5,90 @@ import { FaMinus, FaPlus, FaRegEdit, FaTrash } from 'react-icons/fa';
 import CreatableSelect from "react-select/creatable";
 import { useForm } from 'react-hook-form';
 import DataTable from 'react-data-table-component';
-import { getFloorListByTowerAPI, getRoomListAPI, getTowerListAPI } from '../../api';
+import { createRoomAPI, deleteRoomAPI, getFloorListByTowerAPI, getRoomListAPI, getTowerListAPI } from '../../api';
 import MyDataTable from '../../pageComponents/table/MyDataTable';
 const Room = () => {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState([]);
-  const [towerList,setTowerList]=useState([])
-  const [floorList,setFloorList]=useState([]);
+  const [towerList, setTowerList] = useState([])
+  const [floorList, setFloorList] = useState([]);
   const {
     register,
     handleSubmit,
     watch,
     setValue,
     trigger,
+    reset,
     formState: { errors },
   } = useForm();
 
   const columns = [
     {
-      name: <h4>Tower</h4>,
+      name: <h5>Tower</h5>,
       selector: (row) => row.tower_name,
       sortable: true,
-  },
-  {
-      name: <h4>No Of Floor</h4>,
+    },
+    {
+      name: <h5>No Of Floor</h5>,
       selector: (row) => row.no_of_floor,
       sortable: true,
-  },
- 
-  {
-      name: <h4>Room</h4>,
+    },
+
+    {
+      name: <h5>Room</h5>,
       selector: (row) => row.room_name,
       sortable: true,
-  },
- 
-    {
-        name: <h4>Status</h4>,
-        selector: (row) => row.status,
-        cell: (row) => (
-            <Badge color={`outline-${row.status === true ? "success" : "danger"}`}>
-                {row.status === true ? "Active" : "InActive"}
-            </Badge>
-        ),
-        sortable: true,
     },
-    {
-        name: <h4>Action</h4>,
-        cell: (row) => (
-            <div>
-                <Button outline color={`warning`} className={`me-2`} >
-                    <FaRegEdit />
-                </Button>
-                <Button outline color={`danger`}  >
-                    <FaTrash />
-                </Button>
-            </div>
-        ),
-        sortable: true,
-    },
-];
 
+    {
+      name: <h5>Status</h5>,
+      selector: (row) => row.status,
+      cell: (row) => (
+        <Badge color={`outline-${row.status === true ? "success" : "danger"}`}>
+          {row.status === true ? "Active" : "InActive"}
+        </Badge>
+      ),
+      sortable: true,
+    },
+    {
+      name: <h5>Action</h5>,
+      cell: (row) => (
+        <div>
+          <Button outline color={`warning`} className={`me-2`} >
+            <FaRegEdit />
+          </Button>
+          <Button outline color={`danger`} onClick={() => handleDelete(row)} >
+            <FaTrash />
+          </Button>
+        </div>
+      ),
+      sortable: true,
+    },
+  ];
+
+  
+
+  const handleDelete = (elem) => {
+    const data = {
+      id: elem.id
+    }
+    deleteRoomAPI(data)
+      .then((res) => {
+        if (res.data.status === "Success") {
+          getRoomList();
+        } else {
+          console.log("Failed to delete.")
+        }
+      }).catch((err) => {
+        console.log(err)
+      });
+  }
   useEffect(() => {
-    GetRoomList();
+    getRoomList();
     getTowerList();
   }, [])
 
-  const GetRoomList = () => {
+  const getRoomList = () => {
     getRoomListAPI()
       .then((res) => {
         if (res.data.status === "Success") {
@@ -85,21 +103,21 @@ const Room = () => {
       })
   }
 
-  const getTowerList =()=>{
-getTowerListAPI()
-.then((res)=>{
-  if(res.data.status==="Success"){
-    const data=res.data.data.map((item)=>({
-      value:item.id,
-      label:item.tower_name
-    }))
-    setTowerList(data);
-  }else{
-    console.log("Failed to Fetch. ")
-  }
-}).catch((error)=>{
-  console.log(error)
-})
+  const getTowerList = () => {
+    getTowerListAPI()
+      .then((res) => {
+        if (res.data.status === "Success") {
+          const data = res.data.data.map((item) => ({
+            value: item.id,
+            label: item.tower_name
+          }))
+          setTowerList(data);
+        } else {
+          console.log("Failed to Fetch. ")
+        }
+      }).catch((error) => {
+        console.log(error)
+      })
   }
 
   const handleStatusChange = (e) => {
@@ -109,18 +127,18 @@ getTowerListAPI()
   const handleTowerChange = (e) => {
     setValue("tower", e || "");
     trigger("tower");
-    const data={
-      id:e.value
+    const data = {
+      id: e.value
     }
-    console.log(data,"tower")
-      getFloorListByTowerAPI(data)
-      .then((res)=>{
-        if(res.data.status==="Success"){
+    console.log(data, "tower")
+    getFloorListByTowerAPI(data)
+      .then((res) => {
+        if (res.data.status === "Success") {
           setFloorList(res.data.data)
-        }else{
+        } else {
           console.log("Failed to Get list.")
         }
-      }).catch((err)=>{
+      }).catch((err) => {
         console.log(err)
       })
   };
@@ -133,7 +151,26 @@ getTowerListAPI()
 
   const onFormSubmit = (e) => {
     console.log(e, "data");
- 
+    const data = {
+      towerId: e.tower.value,
+      tower_name: e.tower.label,
+      floor: e.floor.value,
+      room: e.room,
+      status: e.status.value
+    }
+    console.log(data, "submit---")
+    createRoomAPI(data)
+      .then((res) => {
+        if (res.data.status === "Success") {
+          getRoomList();
+          reset()
+          setOpen(false)
+        } else {
+          console.log("Failed to create ")
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
   }
   return (
     <>
@@ -161,27 +198,27 @@ getTowerListAPI()
           <Form onSubmit={handleSubmit(onFormSubmit)} >
             <Row className='row'>
               <Col md={2}>
-              <div className="form-group">
-                <Label  htmlFor="tower">
-                  Tower
-                </Label>
-                <div className="form-control-wrap">
-                <CreatableSelect
-                  id="tower"
-                  options={towerList}
-                  {...register("tower", { required: true })}
-                  onChange={handleTowerChange}
-                  value={watch(`tower`)}
-                />
-                {errors.tower && (
-                        <span
-                          className="invalid"
-                          style={{ color: "#e85347", fontSize: "11px", fontStyle: "italic" }}
-                        >
-                         {errors.tower?.type === "required" && "Tower is Required."}
-                        </span>
-                      )}
-                </div>
+                <div className="form-group">
+                  <Label htmlFor="tower">
+                    Tower
+                  </Label>
+                  <div className="form-control-wrap">
+                    <CreatableSelect
+                      id="tower"
+                      options={towerList}
+                      {...register("tower", { required: true })}
+                      onChange={handleTowerChange}
+                      value={watch(`tower`)}
+                    />
+                    {errors.tower && (
+                      <span
+                        className="invalid"
+                        style={{ color: "#e85347", fontSize: "11px", fontStyle: "italic" }}
+                      >
+                        {errors.tower?.type === "required" && "Tower is Required."}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </Col>
               <Col md={2}>
@@ -211,7 +248,7 @@ getTowerListAPI()
                   type="text"
                   id="room"
                   {...register("room", { required: true })}
-                  className="form-control"
+                  className="form-control input"
                   value={watch(`room`)}
                 />
                 <span className="invalid"
@@ -245,8 +282,8 @@ getTowerListAPI()
                   </div>
                 </div>
               </Col>
-              <Col md={2} className='mt-4'>
-                <Button color='primary' type='submit'>
+              <Col md={2}>
+                <Button color='primary' type='submit' className='button'>
                   Save
                 </Button>
               </Col>
@@ -257,7 +294,7 @@ getTowerListAPI()
       <hr></hr>
       <div className={`row`}>
         <MyDataTable
-columns={columns}
+          columns={columns}
           data={data}
         />
       </div>
