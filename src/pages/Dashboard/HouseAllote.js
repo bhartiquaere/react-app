@@ -29,78 +29,78 @@ const HouseAllote = () => {
 
   const columns = [
     {
-      name: <h6>User Name</h6>,
+      name: <h5>User Name</h5>,
       selector: (row) => row.name,
 
     },
     {
-      name: <h6>Mobile</h6>,
+      name: <h5>Mobile</h5>,
       selector: (row) => row.mobile,
 
     },
 
     {
-      name: <h6>Aadhaar</h6>,
+      name: <h5>Aadhaar</h5>,
       selector: (row) => row.adhaar_card,
 
     },
     {
-      name: <h6>Email</h6>,
+      name: <h5>Email</h5>,
       selector: (row) => row.email,
 
     },
     {
-      name: <h6>Department</h6>,
+      name: <h5>Department</h5>,
       selector: (row) => row.department_name,
 
     },
     {
-      name: <h6>Designation</h6>,
+      name: <h5>Designation</h5>,
       selector: (row) => row.designation_name,
 
     },
     {
-      name: <h6>HOD</h6>,
+      name: <h5>HOD</h5>,
       selector: (row) => row.hod_name,
 
     },
     {
-      name: <h6>Allotment Date</h6>,
+      name: <h5>Allotment Date</h5>,
       selector: (row) => row.date_of_allot,
 
     },
     {
-      name: <h6>Tower</h6>,
+      name: <h5>Tower</h5>,
       selector: (row) => row.tower_name,
 
     },
     {
-      name: <h6>Floor</h6>,
+      name: <h5>Floor</h5>,
       selector: (row) => row.floor_id,
 
     },
     {
-      name: <h6>Room</h6>,
+      name: <h5>Room</h5>,
       selector: (row) => row.room_name,
 
     },
     {
-      name: <h6>Meter No.</h6>,
+      name: <h5>Meter No.</h5>,
       selector: (row) => row.meter_no,
 
     },
     {
-      name: <h6>Meter Reading</h6>,
+      name: <h5>Meter Reading</h5>,
       selector: (row) => row.meter_read,
 
     },
     {
-      name: <h6>Address</h6>,
+      name: <h5>Address</h5>,
       selector: (row) => row.address,
 
     },
     {
-      name: <h6>Action</h6>,
+      name: <h5>Action</h5>,
       cell: (row) => (
         <>
           <Button outline color={`warning`} className={`me-2`}>
@@ -345,7 +345,7 @@ const HouseAllote = () => {
                     Allotment Date
                   </Label>
                   <DatePicker
-                    className="form-control"
+                    className="form-control input datepicker"
                     {...register("allote_date", { required: true })}
                     selected={startDate}
                     onChange={(date) => setStartDate(date)}
@@ -422,7 +422,7 @@ const HouseAllote = () => {
                     type="text"
                     id="room_key"
                     {...register("room_key", { required: true })}
-                    className="form-control"
+                    className="form-control input"
                     value={watch(`room_key`)}
                   />
                   <span
@@ -443,7 +443,7 @@ const HouseAllote = () => {
                     type="text"
                     id="meter_no"
                     {...register("meter_no", { required: true })}
-                    className="form-control"
+                    className="form-control input"
                     value={watch(`meter_no`)}
                   />
                   <span
@@ -462,7 +462,7 @@ const HouseAllote = () => {
                     type="text"
                     id="meter_read"
                     {...register("meter_read", { required: true })}
-                    className="form-control"
+                    className="form-control input"
                     value={watch(`meter_read`)}
                   />
                   <span
@@ -481,7 +481,7 @@ const HouseAllote = () => {
                     type="text"
                     id="user_name"
                     {...register("user_name", { required: true })}
-                    className="form-control"
+                    className="form-control input"
                     value={watch(`user_name`)}
                   />
                   <span
@@ -500,7 +500,7 @@ const HouseAllote = () => {
                     type="text"
                     id="mobile_no"
                     {...register("mobile_no", { required: true })}
-                    className="form-control"
+                    className="form-control input"
                     value={watch(`mobile_no`)}
                   />
                   <span
@@ -521,7 +521,7 @@ const HouseAllote = () => {
                     type="text"
                     id="aadhaar_no"
                     {...register("aadhaar_no", { required: true })}
-                    className="form-control"
+                    className="form-control input"
                     value={watch(`aadhaar_no`)}
                   />
                   <span
@@ -540,7 +540,7 @@ const HouseAllote = () => {
                     type="email"
                     id="email"
                     {...register("email", { required: true })}
-                    className="form-control"
+                    className="form-control input"
                     value={watch(`email`)}
                   />
                   <span
@@ -559,7 +559,7 @@ const HouseAllote = () => {
                     type="text"
                     id="user_address"
                     {...register("user_address", { required: true })}
-                    className="form-control"
+                    className="form-control input"
                     value={watch(`user_address`)}
                   />
                   <span
@@ -569,8 +569,8 @@ const HouseAllote = () => {
                     {errors.user_address?.type === "required" && "User Address is Required."}
                   </span>
                 </Col>
-                <Col md={2} className='mt-4'>
-                  <Button color='primary' type='submit'>
+                <Col md={2}>
+                  <Button color='primary' type='submit'className='button'>
                     Save
                   </Button>
                 </Col>
