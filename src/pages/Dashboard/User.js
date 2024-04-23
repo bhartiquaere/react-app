@@ -6,6 +6,8 @@ import { Badge, Button, Col, Form, Label, Row } from 'reactstrap';
 import { FaMinus, FaPlus, FaRegEdit, FaTrash } from 'react-icons/fa';
 import CreatableSelect from "react-select/creatable";
 import { useForm } from 'react-hook-form';
+import TableHead from '../../component/TableHead';
+import Export from '../../component/Export';
 const User = ({ ...props }) => {
   const [open, setOpen] = useState(false);
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
@@ -55,67 +57,67 @@ const User = ({ ...props }) => {
 
   const columns = [
     {
-      name: <h4>User Type</h4>,
+      name: <h5>User Type</h5>,
       selector: (row) => row.user_type,
       sortable: true,
     },
     {
-      name: <h4>User Name</h4>,
+      name: <h5>User Name</h5>,
       selector: (row) => row.name,
       sortable: true,
     },
     {
-      name: <h4>Email</h4>,
+      name: <h5>Email</h5>,
       selector: (row) => row.email,
       sortable: true,
     },
     {
-      name: <h4>Mobile No.</h4>,
+      name: <h5>Mobile No.</h5>,
       selector: (row) => row.mobile,
       sortable: true,
     },
     {
-      name: <h4>Aadhaar</h4>,
+      name: <h5>Aadhaar</h5>,
       selector: (row) => row.aadhar_card,
       sortable: true,
     },
     {
-      name: <h4>Address</h4>,
+      name: <h5>Address</h5>,
       selector: (row) => row.address,
       sortable: true,
     },
     {
-      name: <h4>Designation</h4>,
+      name: <h5>Designation</h5>,
       selector: (row) => row.designation_name,
       sortable: true,
     },
     {
-      name: <h4>Department</h4>,
+      name: <h5>Department</h5>,
       selector: (row) => row.department_name,
       sortable: true,
     },
     {
-      name: <h4>HOD</h4>,
+      name: <h5>HOD</h5>,
       selector: (row) => row.hod_name,
       sortable: true,
     },
     {
-      name: <h4>Password</h4>,
+      name: <h5>Password</h5>,
       selector: (row) => row.password,
       sortable: true,
     },
     {
-      name: <h4>Status</h4>,
+      name: <h5>Status</h5>,
       selector: (row) => row.status,
       cell: (row) => (
-          <Badge color={`outline-${row.status === true ? "success" : "danger"}`}>
-              {row.status === true ? "Active" : "InActive"}
-          </Badge>
+        <Badge color={`outline-${row.status === true ? "success" : "danger"}`}>
+          {row.status === true ? "Active" : "InActive"}
+        </Badge>
       ),
       sortable: true,
-  },
+    },
     {
-      name: <h4>Action</h4>,
+      name: <h5>Action</h5>,
 
       cell: (row) => (
         <div>
@@ -316,7 +318,7 @@ const User = ({ ...props }) => {
                         </Label>
                         <div className="form-control-wrap">
                           <input
-                          placeholder='Enter Name'
+                            placeholder='Enter Name'
                             type="text"
                             id="name"
                             value={watch("name")}
@@ -346,7 +348,7 @@ const User = ({ ...props }) => {
                         </Label>
                         <div className="form-control-wrap">
                           <input
-                          placeholder='Enter Email'
+                            placeholder='Enter Email'
                             type="email"
                             id="email"
                             {...register('email', {
@@ -547,7 +549,7 @@ const User = ({ ...props }) => {
               ) : null}
               <Col md="2" >
                 <Button type="submit" color="primary"
-                  className='mt-4'
+                  className='button'
                 >
                   Submit
                 </Button>
@@ -559,19 +561,31 @@ const User = ({ ...props }) => {
       <hr></hr>
 
       <div className={`row`}>
-        <DataTable
-          columns={columns}
-          data={userList}
-          subHeader={false}
-          persistTableHead
-          onColumnOrderChange
-          striped={true}
-          responsive={true}
-          pagination
-          paginationResetDefaultPage={resetPaginationToggle}
-          paginationRowsPerPageOptions={[25, 50, 100, 500]}
-          paginationPerPage={25}
-        />
+        <div className='col-md-12'>
+          <div className='card card-table flex-fill'>
+            <TableHead
+              Title="UserList">
+                <Export/>
+              </TableHead>
+            <div className='card-body'>
+              <DataTable
+                columns={columns}
+                data={userList}
+                subHeader={false}
+                persistTableHead
+                onColumnOrderChange
+                striped={true}
+                responsive={true}
+                pagination
+                paginationResetDefaultPage={resetPaginationToggle}
+                paginationRowsPerPageOptions={[25, 50, 100, 500]}
+                paginationPerPage={25}
+              />
+            </div>
+          </div>
+        </div>
+
+
       </div>
 
 
